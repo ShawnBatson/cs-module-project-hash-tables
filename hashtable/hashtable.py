@@ -2,6 +2,7 @@ class HashTableEntry:
     """
     Linked List hash table key/value pair
     """
+
     def __init__(self, key, value):
         self.key = key
         self.value = value
@@ -20,11 +21,14 @@ class HashTable:
     Implement this.
     """
 
-    def __init__(self, capacity):
-        # Your code here
+    def __init__(self, capacity=MIN_CAPACITY):
+        self.capacity = capacity
+        self.storage = [None] * self.capacity
+        self.node = 0  # number of boxes
+        self.top = 0.7  # slightly below 1 so load capacity stays within range
+        self.bottom = 0.2  # slightly above 0 so load capacity stays within range
 
-
-    def get_num_slots(self):
+    def get_num_slots(self, limit=0):
         """
         Return the length of the list you're using to hold the hash
         table data. (Not the number of items stored in the hash table,
@@ -34,17 +38,15 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        return self.capacity
 
-
-    def get_load_factor(self):
+    def get_load_factor(self):  # load factor should always be below 1
         """
         Return the load factor for this hash table.
 
         Implement this.
         """
-        # Your code here
-
+        return self.node / self.capacity  # to get less than 1, divide amount of nodes by capacity
 
     def fnv1(self, key):
         """
@@ -55,22 +57,24 @@ class HashTable:
 
         # Your code here
 
-
     def djb2(self, key):
         """
         DJB2 hash, 32-bit
 
         Implement this, and/or FNV-1.
         """
-        # Your code here
-
+        hash = 5381
+        for b in key:
+            hash = (hash * 33) + ord(b)
+            hash &= 0xffffffff
+        return hash
 
     def hash_index(self, key):
         """
         Take an arbitrary key and return a valid integer index
         between within the storage capacity of the hash table.
         """
-        #return self.fnv1(key) % self.capacity
+        # return self.fnv1(key) % self.capacity
         return self.djb2(key) % self.capacity
 
     def put(self, key, value):
@@ -81,8 +85,16 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
 
+        if self.get_load_factor() >= self.top:  #
+            # change the size by a multiple of 2
+            self.resize(self.capacity * 2)
+
+        index = self.hash_index(key)  # get the hash index key
+
+        if self.storage[index] == None:
+            self.storage[index] = HashTableEntry(key, value)
+            self.node += 1
 
     def delete(self, key):
         """
@@ -92,8 +104,6 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
-
 
     def get(self, key):
         """
@@ -103,8 +113,16 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        # grab the index:
+        index = self.hash_index(key)
 
+        current = self.storage[index]
+
+        while current != None:  # while the box is not empty
+            if current.key == key:  # if the current key matches the input key
+                return current.value  # return the key
+            else:
+                return None  # else return none
 
     def resize(self, new_capacity):
         """
@@ -113,8 +131,19 @@ class HashTable:
 
         Implement this.
         """
-        # Your code here
+        # bring in the original list
+        old = self.storage
+        new = [None] * new_capacity  # make a new blank list
+        self.storage = new  # replace storage with the new set
+        self.capacity = len(new)  # set a new original capacity
 
+        # loop through the old list, and place in original positions:
+        for box in old:  # for all in box
+            if box != None:  # if box is not empty
+                current = box  # set that box to current
+                while current:  # while there is a current
+                    # use the put function to insert the key value pair
+                    self.put(current.key, current.value)
 
 
 if __name__ == "__main__":
