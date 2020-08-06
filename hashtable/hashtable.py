@@ -104,6 +104,23 @@ class HashTable:
 
         Implement this.
         """
+        # check for resize
+        if self.get_load_factor() <= self.bottom:
+            self.resize(MIN_CAPACITY)
+        else:
+            self.resize(self.capacity // 2)
+
+        # grab the index:
+        index = self.hash_index(key)
+        current = self.storage[index]
+        while current != None:
+            if current.key == key:
+                current = None
+                self.node -= 1
+                return
+            else:
+                break
+        print('Warning, key not found')
 
     def get(self, key):
         """
@@ -120,7 +137,7 @@ class HashTable:
 
         while current != None:  # while the box is not empty
             if current.key == key:  # if the current key matches the input key
-                return current.value  # return the key
+                return current.value  # return the current key's value
             else:
                 return None  # else return none
 
