@@ -95,6 +95,10 @@ class HashTable:
         if self.storage[index] == None:
             self.storage[index] = HashTableEntry(key, value)
             self.node += 1
+        elif self.storage[index] != None:
+            self.storage[index] = HashTableEntry(key, value)
+            self.node += 1
+            return
 
     def delete(self, key):
         """
@@ -104,23 +108,13 @@ class HashTable:
 
         Implement this.
         """
-        # check for resize
-        if self.get_load_factor() <= self.bottom:
-            self.resize(MIN_CAPACITY)
-        else:
-            self.resize(self.capacity // 2)
-
         # grab the index:
         index = self.hash_index(key)
-        current = self.storage[index]
-        while current != None:
-            if current.key == key:
-                current = None
-                self.node -= 1
-                return
-            else:
-                break
-        print('Warning, key not found')
+        if self.storage[index].key == key:
+            self.storage[index].value = None
+
+        else:
+            print('Warning, key not found')
 
     def get(self, key):
         """
