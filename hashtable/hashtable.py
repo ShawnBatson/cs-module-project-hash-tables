@@ -92,25 +92,28 @@ class HashTable:
 
         index = self.hash_index(key)  # get the hash index key
 
-        if self.storage[index] == None:
-            self.storage[index] = HashTableEntry(key, value)
-            self.nodes += 1
+        if self.storage[index] == None:  # if the index is none,
+            self.storage[index] = HashTableEntry(
+                key, value)  # make that none the entry
+            self.nodes += 1  # add one to the node count
+
         # elif self.storage[index] != None:
         #     self.storage[index] = HashTableEntry(key, value)
         #     self.nodes += 1
         #     return
         else:
-            current = self.storage[index]
-            while current != None:
-                if current.key == key:
-                    current.value = value
+            current = self.storage[index]  # set the current to the index
+            while current != None:  # while current is not none
+                if current.key == key:  # and if the current key = key
+                    current.value = value  # then the current vaue = value
                     break
-                elif current.next != None:
-                    current = current.next
+                elif current.next != None:  # if the current.next is none
+                    current = current.next  # set the new current to the None next
                 else:
-                    break
-            current.nex = HashTableEntry(key, value)
-            self.nodes += 1
+                    break  # otherwise stop
+            # set the current.next to the new entry
+            current.next = HashTableEntry(key, value)
+            self.nodes += 1  # add to the node count
 
     def delete(self, key):
         """
@@ -124,33 +127,34 @@ class HashTable:
             # THIS IS THE STRETCH / if goes below 0.2, resize to minimum 8
             self.resize(MIN_CAPACITY)
         else:
+            # else, just resize it like normal, cut in half.
             self.resize(self.capacity // 2)
 
         # grab the index:
         index = self.hash_index(key)
-        current = self.storage[index]
-        previous = self.storage[index]
+        current = self.storage[index]  # set up the linked list directional
+        previous = self.storage[index]  # set up the linked list direcional
 
-        if current.next == None:
-            self.storage[index] = None
-            self.nodes -= 1
+        if current.next == None:  # if next is none
+            self.storage[index] = None  # Then the index is none
+            self.nodes -= 1  # remove one from count
             return
-        elif current.key == key:
-            self.storage[index] = current.next
-            self.nodes -= 1
+        elif current.key == key:  # if the current key = target key
+            self.storage[index] = current.next  # index then equals next
+            self.nodes -= 1  # remove one from node count
         else:
-            current = current.next
+            current = current.next  # just remove the pointer from current
 
-        while current != None:
-            if current.key == key:
-                previous.next = current.next
-                self.nodes -= 1
+        while current != None:  # while current is none
+            if current.key == key:  # if current key is key
+                previous.next = current.next  # the previous' next, now is the current.next
+                self.nodes -= 1  # remove from count
                 return
-            elif current.next != None:
-                current = current.next
-                previous = previous.next
+            elif current.next != None:  # if current next is not None
+                current = current.next  # current now equals current.next
+                previous = previous.next  # previous now equals previous.next
             else:
-                break
+                break  # break
 
         print('Warning, key not found')
 
