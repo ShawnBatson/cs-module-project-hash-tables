@@ -108,7 +108,7 @@ class HashTable:
                     current.value = value  # then the current vaue = value
                     break
                 elif current.next != None:  # if the current.next is none
-                    current = current.next  # set the new current to the None next
+                    current = current.next  # set the current to the non-None next
                 else:
                     break  # otherwise stop
             # set the current.next to the new entry
