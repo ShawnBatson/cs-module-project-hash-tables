@@ -1,6 +1,12 @@
 def no_dups(s):
-    # Your code here
+    box = set()
+    s = s.split()
+    for word in s:
 
+        if word not in box:
+            box.add(word)
+
+    return box
 
 
 if __name__ == "__main__":
