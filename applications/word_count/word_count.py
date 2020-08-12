@@ -1,10 +1,15 @@
 def word_count(s):
-    box = {}
-    ignoredChars = ["?", "!", "\"", ":", ";", ",", ".", "-", "+", "=",
-                    "/", "\\", "|", "[", "]", "{", "}", "(", ")", "*", "^", "&"]
-    ignoredCount = 0
 
-    s = s.lower()
+    ignoredChars = ['', '', "?", "!", "\"", ":", ";", ",", ".", "-", "+", "=",
+                    "/", "\\", "|", "[", "]", "{", "}", "(", ")", "*", "^", "&"]
+
+    # ic = str.maketrans('', '', '":;,.-+=/\\|[]{}()*^&')
+    # s = s.translate(ic).lower()
+
+    ignoredCount = 0
+    words = s.split()
+    box = {}
+
     # check for restricted characters from ignoredChars
     for i in s:
         for x in ignoredChars:
@@ -17,7 +22,7 @@ def word_count(s):
         return {}
 
     # make the table, first split the string at the space
-    words = s.split(" ")
+
     for word in words:
         if word not in box:
             box[word] = 1
@@ -28,6 +33,7 @@ def word_count(s):
 
 
 if __name__ == "__main__":
+    print(word_count("Hello    hello"))
     print(word_count(""))
     print(word_count("Hello"))
     print(word_count('Hello, my cat. And my cat doesn\'t say "hello" back.'))

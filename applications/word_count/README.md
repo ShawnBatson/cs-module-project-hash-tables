@@ -29,3 +29,15 @@ Ignore each of the following characters:
 ```
 
 If the input contains no ignored characters, return an empty dictionary.
+
+    # tr = str.maketrans('', '', '":;,.-+=/\\|[]{}()*^&')
+    # s = s.translate(tr).lower()
+    # words = s.split()
+    # counts = {}
+
+    # for w in words:
+    #     if w not in counts:
+    #         counts[w] = 1
+    #     else:
+    #         counts[w] += 1
+    # return counts
