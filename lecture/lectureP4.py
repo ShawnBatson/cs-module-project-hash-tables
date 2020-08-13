@@ -1,4 +1,4 @@
-# BOTH OF THESE ARE ON MY LEETCODE.  THERE IS NO ACTIVE TESTS HERE.
+# BOTH OF THESE ARE ON MY LEETCODE.  THERE IS NO ACTIVE TESTS
 
 # Count how many times each character in J appears in S
 # Naive
@@ -8,7 +8,8 @@ class Solution:
         # for each Char in J
         for char_j in J:
             for char_s in S:
-                if char_j == char_scount += 1
+                if char_j == char_s:
+                    count += 1
         #    compare with each char in s
         #       if char J = char S then count ++
         return count
