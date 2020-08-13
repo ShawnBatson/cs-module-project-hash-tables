@@ -40,7 +40,7 @@ class Solution2:
 # if n transforms to one, return true
 # if n transforms into something we've already seen, return false
 
-class Solution:
+class Solution21:
 
     def __init__(self):
         self.seen_values = set()  # for leet code
