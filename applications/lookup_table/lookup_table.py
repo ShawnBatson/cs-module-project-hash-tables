@@ -1,4 +1,9 @@
-# Your code here
+import math
+import random
+
+powCache = {}
+factorialCache = {}
+floorDivCache = {}
 
 
 def slowfun_too_slow(x, y):
@@ -9,17 +14,27 @@ def slowfun_too_slow(x, y):
 
     return v
 
-def slowfun(x, y):
-    """
-    Rewrite slowfun_too_slow() in here so that the program produces the same
-    output, but completes quickly instead of taking ages to run.
-    """
-    # Your code here
 
+def slowfun(x, y):
+
+    if (x, y) not in powCache:
+        powCache[(x, y)] = math.pow(x, y)
+    v = powCache[(x, y)]
+
+    if (x, y) not in factorialCache:
+        factorialCache[(x, y)] = math.factorial(powCache[(x, y)])
+    v = factorialCache[(x, y)]
+
+    if (x, y) not in floorDivCache:
+        floorDivCache[(x, y)] = factorialCache[(x, y)] // (x+y)
+    v //= (x + y)
+
+    v %= 982451653
+
+    return v
 
 
 # Do not modify below this line!
-
 for i in range(50000):
     x = random.randrange(2, 14)
     y = random.randrange(3, 6)
